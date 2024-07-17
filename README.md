@@ -56,39 +56,39 @@ This is a python script which enables the rover to avoid obstacles and process t
 
 ## Publishers and Subscribers:
 
-self.pub - rospy publisher which publishes ‘/motion’ topic of type WheelRPM
+`self.pub` - rospy publisher which publishes ‘/motion’ topic of type WheelRPM
 
-self.cam_color - rospy subscriber subscribing to '/zed2i/zed_node/rgb/image_rect_color’ topic. It is used to colour info from the image captured
+`self.cam_color` - rospy subscriber subscribing to '/zed2i/zed_node/rgb/image_rect_color’ topic. It is used to colour info from the image captured
 
-self.cam_depth - rospy subscriber subscribing to '/zed2i/zed_node/depth/depth_registered’ topic. It is used to get depth info from the image captured
+`self.cam_depth` - rospy subscriber subscribing to '/zed2i/zed_node/depth/depth_registered’ topic. It is used to get depth info from the image captured
 
-self.odom - rospy subscriber subscribing '/odometry/filtered’ topic. It is used to get the rover’s position and configuration in the field
+`self.odom` - rospy subscriber subscribing '/odometry/filtered’ topic. It is used to get the rover’s position and configuration in the field
 
-self.laser - rospy subscriber subscribing to ‘/scan’ topic. It is used to get data from the lidar.
+`self.laser` - rospy subscriber subscribing to ‘/scan’ topic. It is used to get data from the lidar.
 
 ---
 
 ## Class methods:
 
-**__init__** - Initialises Subscribers to /scan(Lidar data), /odometry/filtered(Odometry), /zed2i/zed_node/rgb/image_rect_color(zed2i rectified image) and /zed2i/zed_node/depth/depth_registered(zed2i depth image)
+`__init__` - Initialises Subscribers to /scan(Lidar data), /odometry/filtered(Odometry), /zed2i/zed_node/rgb/image_rect_color(zed2i rectified image) and /zed2i/zed_node/depth/depth_registered(zed2i depth image)
 
 init also initialises a number of class attributes to various values
 
-**color_callback -** Callback function for zed2i rectified image subscriber. It bridges the image from the camera to CV2 through self.colour_image
+`color_callback` - Callback function for zed2i rectified image subscriber. It bridges the image from the camera to CV2 through `self.colour_image`
 
-**depth_callback -** Callback function for zed2i depth camera subscriber. It bridges the image from camera to CV2 through self.depth_color
+`depth_callback` - Callback function for zed2i depth camera subscriber. It bridges the image from camera to CV2 through `self.depth_color`
 
-**lidar_callback -** Callback function for lidar subscriber. It sets left num and right num, and then iterates through a hundred points for both of them and finds stores the sums as left_ch_sum and right_check_sum. It sets self.right_check and self.left_check to their respective sums/100.
+`lidar_callback` - Callback function for lidar subscriber. It sets `left_num` and `right_num`, and then iterates through a hundred points for both of them and finds stores the sums as `left_check_sum` and `right_check_sum`. It sets   `self.right_check` and `self.left_check` to their respective sums/100.
 
-**odom_callback -** Callback function for odometer subscriber. It sets the current x and y positions of the rover. If self.odom_initialized is false, it sets the current x,y position of the rover. It sets self.odom_self[0] and self.odom_self[1] to current position - final position
+`odom_callback` - Callback function for odometer subscriber. It sets the current x and y positions of the rover. If `self.odom_initialized` is false, it sets the current x,y position of the rover. It sets `self.odom_self[0]` and `self.odom_self[1]` to current position - final position
 
-**spline_distance -** Fits a cubic spline to the points passed to it. Returns the length of the arc.
+`spline_distance` - Fits a cubic spline to the points passed to it. Returns the length of the arc.
 
-**color_detection -** This function detects all red, blue and yellow which are above a threshold area of 600 units. It then sets the distance of that object in self.depth_colour
+`color_detection` - This function detects all red, blue and yellow which are above a threshold area of 600 units. It then sets the distance of that object in `self.depth_colour`
 
-**main - The final computation is done in this method and it is comprised of various parts:**
+`main` - The final computation is done in this method and it is comprised of various parts:**
 
-1. The first part of the main method moves the rover ahead while making sure it does not hit any objects by using the lidar code to check which side to turn. If any of the objects is closer than the threshold distance then turn the rover with an angular velocity of 20. It also keeps track of the coordinates of the rover through the lists self.x and self.
+1. The first part of the main method moves the rover ahead while making sure it does not hit any objects by using the lidar code to check which side to turn. If any of the objects is closer than the threshold distance then turn the rover with an angular velocity of 20. It also keeps track of the coordinates of the rover through the lists `self.x` and `self.y`
 2. The second part of main calculates the displacement of the rover every two seconds.
-3. The third part of main checks if the cameras have received information, and then calls self.color_detection. It then checks if self.counter has reached 50, if true gives the distance along the cubic spline the rover has traveled till now, followed by resetting self.counter
-4. The fourth part of main checks if any coloured object is detected and outputs the distance of the object from the rover. It then sets self.distance to the sum of displacement of rover and distance of coloured object from rover to ouptput the final distance of coloured object from starting point of rover.
+3. The third part of main checks if the cameras have received information, and then calls `self.color_detection`. It then checks if `self.counter` has reached 50, if true gives the distance along the cubic spline the rover has traveled till now, followed by resetting `self.counter`
+4. The fourth part of main checks if any coloured object is detected and outputs the distance of the object from the rover. It then sets `self.distance` to the sum of displacement of rover and distance of coloured object from rover to ouptput the final distance of coloured object from starting point of rover.
