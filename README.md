@@ -10,47 +10,47 @@ This is a python script which enables the rover to avoid obstacles and process t
 
 ## Variables and Objects
 
-lower_range, upper_range - hsv ranges for 
+`lower_range, upper_range` - hsv ranges for 
 
-self.color_image - rectified image from zed2i camera
+`self.color_image` - rectified image from zed2i camera
 
-self.depth_image - depth image from zed2i camera
+`self.depth_image` - depth image from zed2i camera
 
-left_num - starting point for left range of lidar data
+`left_num` - starting point for left range of lidar data
 
-right_num - starting point for right range of lidar data
+`right_num` - starting point for right range of lidar data
 
-left_check_sum - sum of lidar data from left_num to left_num+100
+`left_check_sum` - sum of lidar data from left_num to left_num+100
 
-right_check_sum - sum of lidar data from right_num to right_num+100
+`right_check_sum` - sum of lidar data from right_num to right_num+100
 
-self.left_check = left_check_sum/100
+`self.left_check` = left_check_sum/100
 
-self.right_check = right_check_sum/100
+`self.right_check` = right_check_sum/100
 
-self.odom_self[0] - current x position of rover
+`self.odom_self[0]` - current x position of rover
 
-self.odom_self[1] - current y position of rover
+`self.odom_self[1]` - current y position of rover
 
-self.initial_odom[0] - initial x position of rover
+`self.initial_odom[0]` - initial x position of rover
 
-self.initial_odom[1] - initial y position of rover
+`self.initial_odom[1]` - initial y position of rover
 
-self.color_detected - true or false based on wether color is detected
+`self.color_detected` - true or false based on wether color is detected
 
-twist - object of wheel RPM
+`twist` - object of wheel RPM
 
-safety_distance - threshold distance from any obstacles
+`safety_distance` - threshold distance from any obstacles
 
-self.counter - a counting variable which keeps increasing until 50 (wherein distance travelled is computed and self.counter is reset)
+`self.counter` - a counting variable which keeps increasing until 50 (wherein distance travelled is computed and self.counter is reset)
 
-time.time() - a global clock
+`time.time()` - a global clock
 
-self.timer - a temp variable used to store time at certain intervals
+`self.timer` - a temp variable used to store time at certain intervals
 
-self.color_came - a bool variable to check if color image has been captured by camera
+`self.color_came` - a bool variable to check if color image has been captured by camera
 
-self.depth_came - a bool variable to check if depth info has been captured by depth camera
+`self.depth_came` - a bool variable to check if depth info has been captured by depth camera
 
 ---
 
