@@ -92,3 +92,9 @@ init also initialises a number of class attributes to various values
 2. The second part of main calculates the displacement of the rover every two seconds.
 3. The third part of main checks if the cameras have received information, and then calls `self.color_detection`. It then checks if `self.counter` has reached 50, if true gives the distance along the cubic spline the rover has traveled till now, followed by resetting `self.counter`
 4. The fourth part of main checks if any coloured object is detected and outputs the distance of the object from the rover. It then sets `self.distance` to the sum of displacement of rover and distance of coloured object from rover to ouptput the final distance of coloured object from starting point of rover.
+
+---
+
+##  Flow Control:
+![image](https://github.com/user-attachments/assets/1af67a69-148e-4616-87d0-5db57e6f3fa9)
+
